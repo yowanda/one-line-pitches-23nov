@@ -13,9 +13,13 @@ PITCH = (
 
 
 def main() -> None:
+    if not 1 <= len(PITCH) <= 240:
+        raise ValueError(f"pitch must be 1-240 characters, got {len(PITCH)}")
+    if not PITCH.strip():
+        raise ValueError("pitch must not be only whitespace")
     out_dir = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
     out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / "entry.txt").write_text(PITCH, encoding="utf-8")
+    (out_dir / "entry.txt").write_bytes(PITCH.encode("utf-8"))
 
 
 if __name__ == "__main__":
